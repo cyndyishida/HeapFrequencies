@@ -3,6 +3,7 @@ Project : Heaps
 
 Assignment Overview
 
+
 You will be building a fixed size min heap. Meaning, in the constructor for the Heap class there 
 will be a capacity value entered and you cannot ever exceed the number of elements at that capacity level. 
 
@@ -12,28 +13,40 @@ Assignment Deliverables
 Be sure to submit your project as a folder named "Project6" and include in the folder:
 
 Heap.py, a Python3 file
-
+Node Class is completed in the skeleton file.
+It's definition includes a key and a value, where the key denotes the actual entity determining the ordering within the heap,
+and the value represents the actual content of interest.
+It also has been provided with less than, greater than and string representation methods.
+Once a Node has been instantiated, the member variables should not be modified.
+Finally, it has a single accessor method to obtain the value of the Node.
 
 Heap Class is partially completed in the skeleton file. Function signatures or provided funtons may not be edited in anyway.
-* __init(self, capacity)
+* __init__(self, capacity)
     self._size - number of nodes in tree
     self._data - built in list meant to contingiously store the nodes 
     self._capacity - enforced number of elements that can exist in the heap at any given time 
 
-Complete and implement the following functions. Do not modify the function signatures 
-* _percUp(self)
+Complete and implement the following functions. Do not modify the function signatures
+
+* _perc_up(self)
     - when an element exists in the last spot of the underlying data, perculate it up to it's 
     valid spot in the heap representation 
     - return None 
     - Time Complexity O(log(N))     
-    - Space Compleity O(1) 
+    - Space Complexity O(1)
 
-* _percDown(self)
+* _perc_down(self)
     - when an element exists in the first spot of the underlying data, perculate it down to it's 
     valid spot in the heap representation 
     - return None 
     - Time Complexity O(log(N))     
-    - Space Compleity O(1) 
+    - Space Complexity O(1)
+
+* _min_child(self, idx)
+    - given an index of some root, return the index of which child is smallest
+    - in the event that the index is a leaf node return -1
+    - return : type int
+
 
 * push( self, el):
     - adds new element into heap  
@@ -52,7 +65,9 @@ Complete and implement the following functions. Do not modify the function signa
 
 * is_empty(self)
     - return : type Bool 
-
+* top(self)
+    - return : type Node
+    - return the root, in the case where that isn't possible return None
 
     
 
@@ -60,12 +75,15 @@ Complete and implement the following functions. Do not modify the function signa
 Application Problem 
 
 * most_x_commons(vals, x):
-
-- returns a set of integers
+vals: type List[string]
+x: type int
+- returns a set of strings
 - Space Complexity O(N)
 - Time Complexity O(Nlog(x)) 
 - N == len(vals)
-
+* Using any kind of sorting algorithm will result in a zero.
+* in the case of ties (i.e. the elements have the same amount of repeatness)
+ pick the element that comes first lexicographically
 
 
 readme.txt, a text file that includes:
@@ -75,10 +93,11 @@ A list of any external resources that you used, especially websites (make sure t
  
 Assignment Specifications
 - No use of heapq module is permitted
-- in the case  of ties pick the lesser than value
-- Only allowed container classes (or class methods) allowed are built in lists (specifically to store underlying heap class data) and the built in dictionary.
+- Only allowed container classes (or class methods) allowed are built in lists (specifically to store underlying heap class data) and the built in dictionary in the application problem.
 - most_x_common MUST run faster then nlogn time, and use your heap class.
 - you are guaranteed that x is always <= N (Where N is the number of elements)
-- in the event of a tie on count within deciding which element to remove because the count is the same, pop the lower value.
+- in the event of a tie on count within deciding which element to remove because the key is the same, pop the lower value.
 - as always methods and attributes with a leading underscore should not be called outside of the class definition
 - guarenteed that no duplicate nodes (meaning same key and value) will be called to be pushed into heap
+- guarenteed that only keys of type int will be pushed
+- All string methods are provided for debugging purposes and aren't used in testing in anyway.

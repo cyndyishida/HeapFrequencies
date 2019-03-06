@@ -12,7 +12,7 @@ class Node:
         return self._key > other._key or (self._key == other._key and self._val > other._val)
 
     def __str__(self):
-        return f'(k: {self._key} v: {self._val})'
+        return 'k: '+ self._key +' v: '+ {self._val}
 
     def get_val(self):
         return self._val
@@ -35,23 +35,24 @@ class Heap:
     ######## Start of Student Modifications  
         
 
-    def _percUp(self):
+    def _perc_up(self):
         i = self._size - 1 
         while (i - 1) // 2 >= 0:
             if self._data[i] < self._data[(i-1) // 2]:
                 self._data[i], self._data[(i-1) // 2] = self._data[(i-1) //2], self._data[i]
             i = (i - 1) // 2
 
-    def _percDown(self):
+    def _perc_down(self):
         i = 0
         while (i * 2 + 1) < self._size:
-            mc = self._minChild(i)
+            mc = self._min_child(i)
             if self._data[i] > self._data[mc]:
                 self._data[mc], self._data[i] = self._data[i], self._data[mc]
             i = mc
 
-    def _minChild(self, i):
-        # helper function not enforced on students to write 
+    def _min_child(self, i):
+        if i * 2 + 1 >= self._size:
+            return -1
         if i * 2 + 2 >= self._size:
             return i * 2 + 1
         return i * 2 + 1  if self._data[i * 2 + 1] < self._data[i * 2 + 2] else  i * 2 + 2
@@ -59,7 +60,7 @@ class Heap:
     def push(self, key, val):
         self._data[self._size]= Node(key, val)
         self._size += 1
-        self._percUp()
+        self._perc_up()
         # number of elements in heap should never exceed K
         if self._size == self._capacity:
             self.pop()
@@ -71,7 +72,7 @@ class Heap:
         popped = self._data[0]
         self._data[0], self._data[self._size -1] = self._data[self._size-1], None
         self._size -= 1
-        self._percDown()
+        self._perc_down()
         return popped.get_val()
 
     def is_empty(self):
