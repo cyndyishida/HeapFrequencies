@@ -1,2 +1,4 @@
 .idea/*
 .*.swp
+*.zip
+__pycache__/*

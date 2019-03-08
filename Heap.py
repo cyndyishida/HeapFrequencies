@@ -1,6 +1,9 @@
-
 class Node:
-    # DO NOT MODIFY THIS CLASS #
+    """
+    Class definition shouldn't be modified in anyway
+    """
+    __slots__ = '_key', '_val'
+
     def __init__(self, key, val):
         self._key = key
         self._val = val
@@ -11,95 +14,74 @@ class Node:
     def __gt__(self, other):
         return self._key > other._key or (self._key == other._key and self._val > other._val)
 
-    def __str__(self):
-        return 'k: '+ self._key +' v: '+ {self._val}
+    def __eq__(self, other):
+        return self._key == other._key and self._val == other._val
 
-    def get_val(self):
-        return self._val
+    def __str__(self):
+        return '(k: {0} v: {1})'.format(str(self._key), str(self._val))
 
     __repr__ = __str__
 
+    def __hash__(self):
+        return hash(str(self))
+
+    @property
+    def val(self):
+        """
+        :return: getter
+        """
+        return self._val
+
 
 class Heap:
+    """
+    Class definition is partially completed.
+    Function signatures and provided functions may not be edited in anyway.
+    """
+    __slots__ = '_size', '_capacity', '_data'
+
     def __init__(self, capacity):
-        # DO NOT MODIFY THIS METHOD #
         self._size = 0
-        self._capacity = capacity+1
+        self._capacity = capacity + 1  # additional element space for push
         self._data = [None] * self._capacity
 
     def __str__(self):
         return ', '.join(str(el) for el in self._data if el is not None)
-    
+
     __repr__ = __str__
 
-    ######## Start of Student Modifications  
-        
+    """
+    DO NOT MODIFY ABOVE
+    Start of Student Modifications
+    """
 
-    def _perc_up(self):
-        i = self._size - 1 
-        while (i - 1) // 2 >= 0:
-            if self._data[i] < self._data[(i-1) // 2]:
-                self._data[i], self._data[(i-1) // 2] = self._data[(i-1) //2], self._data[i]
-            i = (i - 1) // 2
+    def _percolate_up(self):
+        pass
 
-    def _perc_down(self):
-        i = 0
-        while (i * 2 + 1) < self._size:
-            mc = self._min_child(i)
-            if self._data[i] > self._data[mc]:
-                self._data[mc], self._data[i] = self._data[i], self._data[mc]
-            i = mc
+    def _percolate_down(self):
+        pass
 
     def _min_child(self, i):
-        if i * 2 + 1 >= self._size:
-            return -1
-        if i * 2 + 2 >= self._size:
-            return i * 2 + 1
-        return i * 2 + 1  if self._data[i * 2 + 1] < self._data[i * 2 + 2] else  i * 2 + 2
+        pass
 
     def push(self, key, val):
-        self._data[self._size]= Node(key, val)
-        self._size += 1
-        self._perc_up()
-        # number of elements in heap should never exceed K
-        if self._size == self._capacity:
-            self.pop()
-
-    def pop(self):
-        if self.is_empty():
-            return None
-
-        popped = self._data[0]
-        self._data[0], self._data[self._size -1] = self._data[self._size-1], None
-        self._size -= 1
-        self._perc_down()
-        return popped.get_val()
-
-    def is_empty(self):
-        return self._size == 0
-
-    def top(self):
-        return None if self.is_empty() else self._data[0].get_val()
-
-
-def most_x_common(vals, x):
-    """
-    Solution:
-    build frequency table for each value - O(N)
-    add each element in frequency table to heap - O(Nlog(X))
-    * in push anytime you exceed X pop the element to get back to a stable state
-    removing all contents from heap until empty(at X) into set - O(Xlog(X))
+        pass
     
-    Full RunTime  = Nlog(X)
-    """
-    heap = Heap(x)
-    freq_table = {}
-    for i in vals:
-        freq_table[i] = freq_table.get(i, 0) + 1
+    def pop(self):
+        pass
 
-    for ch,freq in freq_table.items():
-        heap.push(key=freq, val=ch)
+    @property  # do not remove
+    def empty(self):
+        pass
 
-    return {heap.pop() for i in range(x)}
+    @property  # do not remove
+    def top(self):
+        pass 
+
+    @property  # do not remove
+    def levels(self):
+        pass 
 
 
+def most_x_common(vals, X):
+    pass

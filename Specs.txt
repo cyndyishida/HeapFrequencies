@@ -1,18 +1,18 @@
-Project : Heaps 
-
-
 Assignment Overview
-
-
 You will be building a fixed size min heap. Meaning, in the constructor for the Heap class there 
-will be a capacity value entered and you cannot ever exceed the number of elements at that capacity level. 
+will be a capacity value entered and you cannot ever exceed the number of elements at that capacity level.
+There are valid implementations of heaps with indexing starting at 1, however for this assignment its required that indexing of
+the underlying data starts at 0, like the actual programming language.
 
- 
-
-Assignment Deliverables
+Assignment Specifications
 Be sure to submit your project as a folder named "Project6" and include in the folder:
 
-Heap.py, a Python3 file
+- Heap.py, a Python3 file
+- readme.txt, a text file that includes:
+    Your name and feedback on the project
+    How long it took to complete
+    A list of any external resources that you used, especially websites (make sure to include the URLs) and which function(s) you used this information for.
+
 Node Class is completed in the skeleton file.
 It's definition includes a key and a value, where the key denotes the actual entity determining the ordering within the heap,
 and the value represents the actual content of interest.
@@ -23,23 +23,22 @@ Finally, it has a single accessor method to obtain the value of the Node.
 Heap Class is partially completed in the skeleton file. Function signatures or provided funtons may not be edited in anyway.
 * __init__(self, capacity)
     self._size - number of nodes in tree
-    self._data - built in list meant to contingiously store the nodes 
+    self._data - built in list meant to contiguously store the nodes
     self._capacity - enforced number of elements that can exist in the heap at any given time 
 
 Complete and implement the following functions. Do not modify the function signatures
 
-* _perc_up(self)
-    - when an element exists in the last spot of the underlying data, perculate it up to it's 
-    valid spot in the heap representation 
+* _percolate_up(self)
+    - when an element initially exists in the last spot of the underlying data, percolate it up to it's valid spot in the heap representation
     - return None 
-    - Time Complexity O(log(N))     
+    - Time Complexity O(log(N)) 
     - Space Complexity O(1)
 
-* _perc_down(self)
-    - when an element exists in the first spot of the underlying data, perculate it down to it's 
+* _percolate_down(self)
+    - when an element initially exists in the first spot of the underlying data, perculate it down to it's
     valid spot in the heap representation 
     - return None 
-    - Time Complexity O(log(N))     
+    - Time Complexity O(log(N)) 
     - Space Complexity O(1)
 
 * _min_child(self, idx)
@@ -47,57 +46,63 @@ Complete and implement the following functions. Do not modify the function signa
     - in the event that the index is a leaf node return -1
     - return : type int
 
-
-* push( self, el):
-    - adds new element into heap  
-    - el will always be of type Node 
+* push(self, key, value):
+    - must take the key and value and call the Node constructor to then add into the heap. 
     - return None 
-    - in the event that pushing will excede the limit, you must pop an element out. 
+    - in the event that pushing will exceed the limit, you must pop an element out.
     - Time Complexity O(log(N))
     - Space Complexity O(1) 
 
 * pop(self) 
-    - removes the root element from the heap 
-    - return: type Node, the root element 
-    - if no elements exist return None 
+    - removes the smallest element from the heap 
+    - return: type same as Node.val
+    - if no elements exist return None
     - Time Complexity O(log(N))
-    - Space Complexity O(1) 
+    - Space Complexity O(1)
 
 * is_empty(self)
-    - return : type Bool 
+    - return : type Bool
+
 * top(self)
-    - return : type Node
+    - return : type same as Node.val
     - return the root, in the case where that isn't possible return None
 
-    
+* levels(self)
+    - return: type List[List[Node.get_val()]]
+    - returns all nodes on a single level into a list,
+    i.e. all nodes in the first level, go in list at index 0,
+    all nodes in the second level, go in list at index 1, and so on and so forth.
+    - in the event that no nodes exists, return a single empty list
+    - Time complexity O(N)
+    - Space complexity O(N), here strictly the only memory needed is just for the return value.
+    - i.e. 1N + O(1) space
 
 
-Application Problem 
-
+Application Problem
 * most_x_commons(vals, x):
-vals: type List[string]
-x: type int
-- returns a set of strings
-- Space Complexity O(N)
-- Time Complexity O(Nlog(x)) 
-- N == len(vals)
-* Using any kind of sorting algorithm will result in a zero.
-* in the case of ties (i.e. the elements have the same amount of repeatness)
- pick the element that comes first lexicographically
+    - vals: type List[string]
+    - x: type int
+    - returns a set of strings
+    - Space Complexity O(N)
+    - Time Complexity O(Nlog(X))
+    - N == len(vals)
+    - Using any kind of sorting algorithm will result in a zero.
+    - in the case of ties (i.e. some elements occur the same amount of times)
+    pick the element that comes last lexicographically
+    - no processing/validating should be done on the string, ex. striping for whitespace, etc.
 
+Assignment Notes
+    - No use of heapq module is permitted
+    - Only allowed container classes (or class methods) allowed are built in lists (specifically to store underlying heap class data and within get_levels) and the built in dictionary in the application problem.
+    - most_x_common MUST use your heap class.
+    - you are guaranteed that x is always <= N (Where N is the number of elements)
+    - in the event of a tie on count within deciding which element to remove because the key is the same, pop the lower value.
+    - as always methods and attributes with a leading underscore should not be called outside of the class definition
+    - guaranteed that no duplicate nodes (meaning same key and value) will be called to be pushed into heap
+    - guaranteed that only keys of type int will be pushed
+    - All string methods are provided for debugging purposes and aren't used in testing in anyway.
 
-readme.txt, a text file that includes:
-Your name and feedback on the project
-How long it took to complete
-A list of any external resources that you used, especially websites (make sure to include the URLs) and which function(s) you used this information for.
- 
-Assignment Specifications
-- No use of heapq module is permitted
-- Only allowed container classes (or class methods) allowed are built in lists (specifically to store underlying heap class data) and the built in dictionary in the application problem.
-- most_x_common MUST run faster then nlogn time, and use your heap class.
-- you are guaranteed that x is always <= N (Where N is the number of elements)
-- in the event of a tie on count within deciding which element to remove because the key is the same, pop the lower value.
-- as always methods and attributes with a leading underscore should not be called outside of the class definition
-- guarenteed that no duplicate nodes (meaning same key and value) will be called to be pushed into heap
-- guarenteed that only keys of type int will be pushed
-- All string methods are provided for debugging purposes and aren't used in testing in anyway.
+Rubric
+Visible Tests (75)
+Post-Hidden Tests
+Manual   (25)
